@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 最大的盒子 */
+        .box {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+
+        /* 电池 */
+        .battery {
+            position: relative;
+            width: 220px;
+            height: 350px;
+            background-color: #fff;
+            left: 20%;
+            top: 30%;
+            /* border-radius: 0px 0px 40px 55px; */
+            z-index: 999;
+        }
+
+        /* 电池的上面 */
+        .battery::before {
+            position: absolute;
+            content: "";
+            width: 50px;
+            height: 20px;
+            background-color: #fff;
+            top: -20px;
+            left: 50%;
+            margin-left: -25px;
+            border-radius: 5px 5px 0px 0px;
+        }
+
+        /* 电池里面会流动的东西 */
+        .battery::after {
+            position: absolute;
+            content: "";
+            left: 0;
+            right: 0;
+            top: 90%;
+            bottom: 0;
+            background: linear-gradient(to bottom, #7abcff 0%, #00bcd4 44%, #2196f3 100%);
+            animation: charge 5s linear infinite;
+        }
+
+        .cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            position: absolute;
+            content: "";
+            width: 400px;
+            height: 400px;
+            border-radius: 15px 15px 5px 5px;
+            background: rgba(255, 255, 255, .8);
+            border-radius: 40% 30%;
+            left: -50%;
+            animation: coverBefore 10s linear infinite;
+        }
+
+        .cover::after {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            content: "";
+            background: rgba(255, 255, 255, .7);
+            border-radius: 42% 40%;
+            left: -50%;
+            animation: coverAfter 10s linear infinite;
+        }
+
+        @keyframes charge {
+            0% {
+                top: 100%;
+                filter: hue-rotate(90deg);
+            }
+
+            95% {
+                top: 5%;
+                border-radius: 0px;
+            }
+
+            100% {
+                top: 0%;
+                border-radius: 15px 15px 0 0;
+                filter: hue-rotate(0deg);
+            }
+        }
+
+        @keyframes coverBefore {
+            0% {
+                transform: rotate(0deg);
+                bottom: 0%;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                bottom: 100%;
+            }
+        }
+
+        @keyframes coverAfter {
+            0% {
+                transform: rotate(30deg);
+                bottom: 2%;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                bottom: 95%;
+            }
+        }
+
+        /* 电池的电量 */
+        .number {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            color: #fff;
+            top: 10%;
+            left: 50%;
+            margin-left: 150px;
+            z-index: 9;
+            font-size: 30px;
+        }
+
+        .contrast {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            filter: contrast(15) hue-rotate(0);
+            animation: hueRotate 5s linear infinite;
+            overflow: hidden;
+        }
+
+        /* 泡泡 */
+        .bubble {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #00ff6f;
+            border-radius: 100%;
+            left: 62%;
+            bottom: 0;
+            /* transform: translate(-50%,0); */
+            z-index: 100;
+            animation: bubbleMoveUp ease-in-out infinite;
+            filter: blur(5px);
+        }
+
+        .bubble:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            left: 60%;
+            animation-duration: 5s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 22px;
+            height: 22px;
+            left: 62%;
+            animation-duration: 4s;
+            animation-delay: 1.2s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 24px;
+            height: 24px;
+            left: 58%;
+            animation-duration: 1.8s;
+            animation-delay: 1.2s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 22px;
+            height: 22px;
+            left: 65%;
+            animation-duration: 3.5s;
+            animation-delay: 2.6s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 24px;
+            height: 24px;
+            left: 64%;
+            animation-duration: 4.2s;
+            animation-delay: 2.9s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 21px;
+            height: 21px;
+            left: 65%;
+            animation-duration: 3.8s;
+            animation-delay: 3.4s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 20px;
+            height: 20px;
+            left: 63%;
+            animation-duration: 4.5s;
+            animation-delay: 3.6s;
+        }
+
+        .bubble:nth-child(8) {
+            width: 22px;
+            height: 22px;
+            left: 64%;
+            animation-duration: 4.2s;
+            animation-delay: 4s;
+        }
+
+        .bubble:nth-child(9) {
+            width: 20px;
+            height: 20px;
+            left: 62%;
+            animation-duration: 5.2s;
+            animation-delay: 3.2s;
+        }
+
+        .bubble:nth-child(10) {
+            width: 24px;
+            height: 24px;
+            left: 67%;
+            animation-duration: 4.5s;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes bubbleMoveUp {
+            0% {
+                bottom: 0;
+            }
+
+            100% {
+                bottom: calc(100% - 260px);
+            }
+        }
+
+        /* 泡泡底座*/
+        .bubbel-home {
+            position: absolute;
+            width: 150px;
+            height: 50px;
+            background: #00ff6f;
+            bottom: 0;
+            left: 56%;
+            border-radius: 100px 100px 0px 0px;
+            filter: blur(5px)
+                /* margin-left:-75px; */
+        }
+
+        .circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 50%;
+            top: 0%;
+            box-sizing: border-box;
+            filter: blur(8px);
+            animation: circleRotate 5s linear infinite;
+        }
+
+        .circle::before {
+            position: absolute;
+            content: "";
+            width: 200px;
+            height: 200px;
+            background: #00ff6f;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0);
+            border-radius: 42% 38% 62% 49% / 45%;
+        }
+
+        .circle::after {
+            position: absolute;
+            content: "";
+            width: 176px;
+            height: 178px;
+            background: #000;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes hueRotate {
+            0% {
+                filter: contrast(15) hue-rotate(0)
+            }
+
+            100% {
+                filter: contrast(15) hue-rotate(360deg)
+            }
+        }
+
+        @keyframes circleRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="battery">
+            <div class="cover"></div>
+        </div>
+        <div class="number">
+            <span id="number">20.1</span>
+            <span>%</span>
+        </div>
+        <div class="contrast">
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <span class="bubble"></span>
+            <div class="bubbel-home"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+</body>
+<script>
+    //获取20%
+    var num = document.querySelector("#number");
+    var nums = num.innerHTML;
+    console.log(nums);
+    setInterval(() => {
+        nums = (parseFloat(nums) + 0.1).toFixed(1);
+        num.innerHTML = nums;
+    }, 1000);
+
+
+</script>
+
+</html>
